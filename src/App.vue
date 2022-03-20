@@ -9,6 +9,20 @@
   <div class="container mx-auto">
     <Mortgage :startprice="300000" />
   </div>
+  <p class="my-6">
+    get the code at
+    <a target="_blank" href="https://github.com/xavsio4/mortgage"
+      >https://github.com/xavsio4/mortgage</a
+    >
+  </p>
+  Get it on your phone
+  <img
+    class="mx-auto mb-6"
+    alt="Fifteenpeas mortage simulator"
+    src="./assets/qrcode_mortgage.png"
+    width="100"
+  />
+  A fifteenpeas labs sunday project
 </template>
 
 <script>
