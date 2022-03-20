@@ -1,26 +1,33 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <img
+    class="mx-auto"
+    alt="Fifteenpeas mortage simulator"
+    src="./assets/logo.png"
+    width="60"
+  />
+
+  <div class="container mx-auto">
+    <Mortgage :startprice="300000" />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  //@ts-expect-error import HelloWorld from "./components/HelloWorld.vue";
+  import Mortgage from "./components/Mortgage.vue";
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  export default {
+    name: "App",
+    components: {
+      //  HelloWorld,
+      Mortgage,
+    },
+  };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #app {
+    text-align: center;
+
+    margin-top: 60px;
+  }
 </style>
