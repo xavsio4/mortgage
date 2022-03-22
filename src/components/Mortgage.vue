@@ -30,9 +30,10 @@
               </label>
               <input
                 type="range"
-                max="990000"
+                max="999000"
+                step="1000"
                 v-model="price"
-                class="range range-xs"
+                class="range range-xs my-2"
               />
             </div>
           </li>
@@ -43,7 +44,7 @@
                 <span>Frais</span>
                 <input
                   type="number"
-                  v-model="taxes"
+                  v-model="taxcosts"
                   class="input input-sm w-full"
                 />
                 <span>%</span>
@@ -61,6 +62,13 @@
                 />
                 <span>EUR</span>
               </label>
+              <input
+                type="range"
+                max="999000"
+                step="1000"
+                v-model="reserve"
+                class="range range-xs my-2"
+              />
             </div>
           </li>
           <li>
@@ -87,6 +95,14 @@
                 />
                 <span>ans</span>
               </label>
+              <input
+                type="range"
+                min="5"
+                max="20"
+                step="1"
+                v-model="length"
+                class="range range-xs my-2"
+              />
             </div>
           </li>
         </ul>
@@ -99,7 +115,7 @@
           <span>Prix de vente</span>
           <span>
             {{
-              price.toLocaleString("fr-BE", {
+              pricedsp.toLocaleString("fr-BE", {
                 style: "currency",
                 currency: "EUR",
               })
@@ -132,7 +148,7 @@
           <span>Apport</span>
           <span>
             {{
-              reserve.toLocaleString("fr-BE", {
+              reservedsp.toLocaleString("fr-BE", {
                 style: "currency",
                 currency: "EUR",
               })
@@ -151,14 +167,14 @@
           </span>
         </div>
         <div class="flex justify-between">
-          <span>Quotité emprunt</span>
+          <span>Quotité empruntée</span>
           <span
-            >{{ 100 - (100 / (price / (reserve - frais))).toFixed(2) }} %</span
+            >{{ (100 - 100 / (price / (reserve - frais))).toFixed(2) }} %</span
           >
         </div>
         <div class="flex justify-between">
-          <span>Quotité emprunt sur total</span>
-          <span>{{ 100 - (100 / (prixtotal / reserve)).toFixed(2) }} %</span>
+          <span>Quotité total frais inclus</span>
+          <span>{{ (100 / (prixtotal / reserve)).toFixed(2) }} %</span>
         </div>
         <div class="flex justify-between">
           <span>Cout du prêt</span>
@@ -224,7 +240,8 @@
       //<-(props)
       const acheteur = ref(2);
       const price = ref(295000);
-      const taxes = ref(1.16);
+      const taxcosts = ref(16);
+      const taxes = computed(() => taxcosts.value / 100 + 1);
       const reserve = ref(106000);
       const length = ref(15);
       const loanrate = ref(1.45);
@@ -252,6 +269,10 @@
           (parseFloat(financable.value) * (loanrate.value / 100 / 12)) /
           (1 - Math.pow(1 + loanrate.value / 100 / 12, -length.value * 12))
       );
+
+      const pricedsp = computed(() => parseFloat(price.value));
+
+      const reservedsp = computed(() => parseFloat(reserve.value));
 
       /*onlyForCurrency ($event) {
      // console.log($event.keyCode); //keyCodes value
@@ -281,6 +302,9 @@
         inter2,
         frais,
         acheteur,
+        taxcosts,
+        pricedsp,
+        reservedsp,
       };
     }, //setup
   };
