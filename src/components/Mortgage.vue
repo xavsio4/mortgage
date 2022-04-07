@@ -33,7 +33,7 @@
                 max="999000"
                 step="1000"
                 v-model="price"
-                class="range range-xs my-2"
+                class="range range-md my-2"
               />
             </div>
           </li>
@@ -52,6 +52,30 @@
             </div>
           </li>
           <li>
+            <div class="flex justify-between">
+              <span>Prix total avec frais</span>
+              <span>
+                {{
+                  prixtotal.toLocaleString("fr-BE", {
+                    style: "currency",
+                    currency: "EUR",
+                  })
+                }}
+              </span>
+            </div>
+            <div class="flex justify-between">
+              <span>Frais</span>
+              <span>
+                {{
+                  frais.toLocaleString("fr-BE", {
+                    style: "currency",
+                    currency: "EUR",
+                  })
+                }}
+              </span>
+            </div>
+          </li>
+          <li>
             <div class="form-control">
               <label class="input-group input-group-sm">
                 <span>Apport</span>
@@ -67,8 +91,48 @@
                 max="999000"
                 step="1000"
                 v-model="reserve"
-                class="range range-xs my-2"
+                class="range range-md my-2"
               />
+            </div>
+          </li>
+          <li>
+            <div class="flex justify-between">
+              <span>Prêt total</span>
+              <span>
+                {{
+                  financable.toLocaleString("fr-BE", {
+                    style: "currency",
+                    currency: "EUR",
+                  })
+                }}
+              </span>
+            </div>
+            <div class="flex justify-between">
+              <span>Quotité empruntée</span>
+              <span
+                >{{
+                  (100 - 100 / (price / (reserve - frais))).toFixed(2)
+                }}
+                %</span
+              >
+            </div>
+            <div class="flex justify-between">
+              <span>Quotité total frais inclus</span>
+              <span>{{ (100 / (prixtotal / reserve)).toFixed(2) }} %</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Cout du prêt</span>
+              <span>
+                {{
+                  (mensualite * length * 12 - financable).toLocaleString(
+                    "fr-BE",
+                    {
+                      style: "currency",
+                      currency: "EUR",
+                    }
+                  )
+                }}
+              </span>
             </div>
           </li>
           <li>
@@ -103,6 +167,30 @@
                 v-model="length"
                 class="range range-xs my-2"
               />
+            </div>
+          </li>
+          <li>
+            <div class="mt-4">
+              Mensualités sur <span class="badge">{{ length }}</span> ans est de
+              <span class="badge">{{
+                parseFloat(mensualite).toLocaleString("fr-BE", {
+                  style: "currency",
+                  currency: "EUR",
+                })
+              }}</span>
+              pour un taux de
+              <span class="badge">{{ loanrate }} %</span>
+            </div>
+            <div>
+              <span class="badge font-bold"
+                >Mensualité par personne
+                {{
+                  (mensualite / acheteur).toLocaleString("fr-BE", {
+                    style: "currency",
+                    currency: "EUR",
+                  })
+                }}</span
+              >
             </div>
           </li>
         </ul>
