@@ -6,11 +6,17 @@ Calculette de prêt immobilier en vue3. Mortgage simulator.
 
 see the demo at https://mortgage-eight.vercel.app/
 
+Before proceeding, you need to have node.js installed of course.
+
 ## Project setup
+
+After you've cloned this repository
 
 ```
 npm install
 ```
+
+will install dependencies.
 
 ### Compiles and hot-reloads for development
 
