@@ -11,8 +11,7 @@
                 <input
                   type="number"
                   v-model="acheteur"
-                  class="input input-sm w-full"
-                />
+                  class="input input-sm w-full" />
                 <span>per.</span>
               </label>
             </div>
@@ -24,8 +23,7 @@
                 <input
                   type="number"
                   v-model="price"
-                  class="input input-sm w-full"
-                />
+                  class="input input-sm w-full" />
                 <span>EUR</span>
               </label>
               <input
@@ -33,8 +31,7 @@
                 max="999000"
                 step="1000"
                 v-model="price"
-                class="range range-md my-2"
-              />
+                class="range range-md my-2" />
             </div>
           </li>
           <li></li>
@@ -45,8 +42,7 @@
                 <input
                   type="number"
                   v-model="taxcosts"
-                  class="input input-sm w-full"
-                />
+                  class="input input-sm w-full" />
                 <span>%</span>
               </label>
             </div>
@@ -82,8 +78,7 @@
                 <input
                   type="number"
                   v-model="reserve"
-                  class="input input-sm w-full"
-                />
+                  class="input input-sm w-full" />
                 <span>EUR</span>
               </label>
               <input
@@ -91,8 +86,7 @@
                 max="999000"
                 step="1000"
                 v-model="reserve"
-                class="range range-md my-2"
-              />
+                class="range range-md my-2" />
             </div>
           </li>
           <li>
@@ -142,8 +136,7 @@
                 <input
                   type="number"
                   v-model="loanrate"
-                  class="input input-sm w-full"
-                />
+                  class="input input-sm w-full" />
                 <span>%</span>
               </label>
             </div>
@@ -155,8 +148,7 @@
                 <input
                   type="number"
                   v-model="length"
-                  class="input input-sm w-full"
-                />
+                  class="input input-sm w-full" />
                 <span>ans</span>
               </label>
               <input
@@ -165,8 +157,7 @@
                 max="20"
                 step="1"
                 v-model="length"
-                class="range range-xs my-2"
-              />
+                class="range range-xs my-2" />
             </div>
           </li>
           <li>
@@ -197,8 +188,7 @@
       </form>
       <div
         id="simresult"
-        class="flex-1 p-8 bg-secondary card card-bordered m-6"
-      >
+        class="flex-1 p-8 bg-secondary card card-bordered m-6">
         <div class="flex justify-between">
           <span>Prix de vente</span>
           <span>
@@ -302,67 +292,67 @@
   </div>
 </template>
 <script>
-  import { ref, computed } from "vue";
-  //import { VNumber } from "vue-number-format";
+import { ref, computed } from "vue";
+//import { VNumber } from "vue-number-format";
 
-  export default {
-    /*  props: {
+export default {
+  /*  props: {
       startprice: {
         type: Number,
         default: 300000,
       },
     },*/
-    data() {
-      return {
-        number: {
-          decimal: ".",
-          separator: ",",
-          prefix: "$ ",
-          suffix: " #",
-          precision: 2,
-          masked: false /* doesn't work with directive */,
-        },
-      };
-    },
-    setup() {
-      //<-(props)
-      const acheteur = ref(2);
-      const price = ref(295000);
-      const taxcosts = ref(16);
-      const taxes = computed(() => taxcosts.value / 100 + 1);
-      const reserve = ref(106000);
-      const length = ref(15);
-      const loanrate = ref(1.45);
-      const prixtotal = computed(
-        () => parseFloat(price.value) * parseFloat(taxes.value)
-      );
-      const frais = computed(
-        () => parseFloat(price.value) * parseFloat(taxes.value - 1)
-      );
-      const financable = computed(
-        () =>
-          parseFloat(price.value) -
-          (parseFloat(reserve.value) - parseFloat(frais.value))
-      );
-      const inter1 = computed(
-        () => parseFloat(financable.value) * (loanrate.value / 100 / 12)
-      );
+  data() {
+    return {
+      number: {
+        decimal: ".",
+        separator: ",",
+        prefix: "$ ",
+        suffix: " #",
+        precision: 2,
+        masked: false /* doesn't work with directive */,
+      },
+    };
+  },
+  setup() {
+    //<-(props)
+    const acheteur = ref(2);
+    const price = ref(295000);
+    const taxcosts = ref(16);
+    const taxes = computed(() => taxcosts.value / 100 + 1);
+    const reserve = ref(106000);
+    const length = ref(15);
+    const loanrate = ref(3.1);
+    const prixtotal = computed(
+      () => parseFloat(price.value) * parseFloat(taxes.value)
+    );
+    const frais = computed(
+      () => parseFloat(price.value) * parseFloat(taxes.value - 1)
+    );
+    const financable = computed(
+      () =>
+        parseFloat(price.value) -
+        (parseFloat(reserve.value) - parseFloat(frais.value))
+    );
+    const inter1 = computed(
+      () => parseFloat(financable.value) * (loanrate.value / 100 / 12)
+    );
 
-      const inter2 = ref(
-        1 - Math.pow(1 + loanrate.value / 12, -length.value * 12)
-      );
+    const inter2 = ref(
+      1 - Math.pow(1 + loanrate.value / 12, -length.value * 12)
+    );
 
-      const mensualite = computed(
-        () =>
-          (parseFloat(financable.value) * (loanrate.value / 100 / 12)) /
-          (1 - Math.pow(1 + loanrate.value / 100 / 12, -length.value * 12))
-      );
+    const mensualite = computed(
+      () =>
+        (parseFloat(financable.value) * (loanrate.value / 100 / 12)) /
+        (1 - Math.pow(1 + loanrate.value / 100 / 12, -length.value * 12))
+    );
 
-      const pricedsp = computed(() => parseFloat(price.value));
+    const pricedsp = computed(() => parseFloat(price.value));
 
-      const reservedsp = computed(() => parseFloat(reserve.value));
+    const reservedsp = computed(() => parseFloat(reserve.value));
 
-      /*onlyForCurrency ($event) {
+    /*onlyForCurrency ($event) {
      // console.log($event.keyCode); //keyCodes value
      let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
 
@@ -377,41 +367,41 @@
      }
    }*/
 
-      return {
-        price,
-        mensualite,
-        taxes,
-        reserve,
-        length,
-        loanrate,
-        prixtotal,
-        financable,
-        inter1,
-        inter2,
-        frais,
-        acheteur,
-        taxcosts,
-        pricedsp,
-        reservedsp,
-      };
-    }, //setup
-  };
+    return {
+      price,
+      mensualite,
+      taxes,
+      reserve,
+      length,
+      loanrate,
+      prixtotal,
+      financable,
+      inter1,
+      inter2,
+      frais,
+      acheteur,
+      taxcosts,
+      pricedsp,
+      reservedsp,
+    };
+  }, //setup
+};
 </script>
 <style scoped>
-  h2 {
-    @apply text-2xl font-bold;
-  }
+h2 {
+  @apply text-2xl font-bold;
+}
 
-  label > span {
-    min-width: 6em;
-    font-weight: bold;
-  }
+label > span {
+  min-width: 6em;
+  font-weight: bold;
+}
 
-  li {
-    margin-bottom: 9px;
-  }
+li {
+  margin-bottom: 9px;
+}
 
-  #simresult {
-    font-weight: 600;
-  }
+#simresult {
+  font-weight: 600;
+}
 </style>
