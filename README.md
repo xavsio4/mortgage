@@ -2,7 +2,7 @@
 
 Calculette de prêt immobilier en vue3. Mortgage simulator.
 
-![Mortgage spa calculator in Vue3](Mortgage.png)
+![Mortgage spa calculator in Vue3](https://github.com/xavsio4/mortgage/blob/main/mortgage.png)
 
 see the demo at https://mortgage-eight.vercel.app/
 
